@@ -24,7 +24,18 @@ public class Registro {
 	private Date  horaDeEntrada;
 	private Date  horaDeSaida;
 	
+	public Registro() {
 	
+	}
+	
+	public Registro(Long idPessoa, Laboratorio laboratorio, Date horaDeEntrada) {
+		super();
+		this.id = id;
+		this.idPessoa = idPessoa;
+		this.laboratorio = laboratorio;
+		this.horaDeEntrada = horaDeEntrada;
+		this.horaDeSaida = null;
+	}
 	public Laboratorio getLaboratorio() {
 		return laboratorio;
 	}
