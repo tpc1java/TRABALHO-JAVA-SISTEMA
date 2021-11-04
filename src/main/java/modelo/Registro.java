@@ -21,20 +21,20 @@ public class Registro {
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_laboratorio", referencedColumnName = "id")
 	private Laboratorio laboratorio;
-	private Date  horaDeEntrada;
-	private Date  horaDeSaida;
+	private String acao;
+	private String  hora;
+	
 	
 	public Registro() {
 	
 	}
 	
-	public Registro(Long idPessoa, Laboratorio laboratorio, Date horaDeEntrada) {
+	public Registro(Long idPessoa, Laboratorio laboratorio, String acao,String hora) {
 		super();
 		this.id = id;
 		this.idPessoa = idPessoa;
 		this.laboratorio = laboratorio;
-		this.horaDeEntrada = horaDeEntrada;
-		this.horaDeSaida = null;
+		this.hora = hora;
 	}
 	public Laboratorio getLaboratorio() {
 		return laboratorio;
@@ -42,18 +42,37 @@ public class Registro {
 	public void setLaboratorio(Laboratorio laboratorio) {
 		this.laboratorio = laboratorio;
 	}
-	public Date getHoraDeEntrada() {
-		return horaDeEntrada;
+	public String getHora() {
+		return hora;
 	}
-	public void setHoraDeEntrada(Date horaDeEntrada) {
-		this.horaDeEntrada = horaDeEntrada;
+	public void setHora(String hora) {
+		this.hora = hora;
 	}
-	public Date getHoraDeSaida() {
-		return horaDeSaida;
+
+	public long getId() {
+		return id;
 	}
-	public void setHoraDeSaida(Date horaDeSaida) {
-		this.horaDeSaida = horaDeSaida;
+
+	public void setId(long id) {
+		this.id = id;
 	}
+
+	public Long getIdPessoa() {
+		return idPessoa;
+	}
+
+	public void setIdPessoa(Long idPessoa) {
+		this.idPessoa = idPessoa;
+	}
+
+	public String getAcao() {
+		return acao;
+	}
+
+	public void setAcao(String acao) {
+		this.acao = acao;
+	}
+
 	
 	
 	

@@ -31,8 +31,8 @@ public class RegistroRepositorio {
 	        return (ArrayList<Registro>) entityManager.createQuery("from Registro").getResultList();
 	 }
 
-	public Registro adicionar (Long idPessoa, Laboratorio laboratorio, Date horaDeEntrada) {
-		Registro novoRegistro = new Registro(idPessoa,  laboratorio,  horaDeEntrada);
+	public Registro adicionar (Long idPessoa, Laboratorio laboratorio, String acao,String horaDeEntrada) {
+		Registro novoRegistro = new Registro(idPessoa,  laboratorio, acao ,horaDeEntrada);
 		this.entityManager.getTransaction().begin();
 		this.entityManager.persist(novoRegistro);
 		this.entityManager.getTransaction().commit();
@@ -40,14 +40,6 @@ public class RegistroRepositorio {
 		return novoRegistro;
 	}
 	
-	public Registro atualizarSaida (Long id,Long idPessoa, Date horaDeSaida) {
-		Registro registro = this.entityManager.find(Registro.class, id);
-		this.entityManager.getTransaction().begin();
-		registro.setHoraDeSaida(horaDeSaida);
-		
-		this.entityManager.getTransaction().commit();
-		System.out.println("Saida atualizada com sucesso");
-		return registro;
-	}
+	
 		
 }
