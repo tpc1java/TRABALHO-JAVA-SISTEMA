@@ -12,7 +12,6 @@ import modelo.Turno;
 import java.util.ArrayList;
 import java.util.Date;
 
-
 public class RegistroRepositorio {
 
 	private EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("persistence-jpa");
@@ -28,18 +27,28 @@ public class RegistroRepositorio {
 	}
 
 	public ArrayList<Registro> obterTodos() {
-	        return (ArrayList<Registro>) entityManager.createQuery("from Registro").getResultList();
-	 }
-
-	public Registro adicionar (Long idPessoa, Laboratorio laboratorio, String acao,String horaDeEntrada) {
-		Registro novoRegistro = new Registro(idPessoa,  laboratorio, acao ,horaDeEntrada);
-		this.entityManager.getTransaction().begin();
-		this.entityManager.persist(novoRegistro);
-		this.entityManager.getTransaction().commit();
-		System.out.println("Registro adicionado com sucesso");
-		return novoRegistro;
+		return (ArrayList<Registro>) entityManager.createQuery("from Registro").getResultList();
 	}
 	
+	public ArrayList<Registro> obterPorPessoa(Long idPessoa) {
+		return (ArrayList<Registro>) entityManager.createQuery("from Registro where idPessoa = " + idPessoa).getResultList();
+	}
+
 	
-		
+	public ArrayList<Registro> obterPorLaboratorio(Long idLaboratorio) {
+		return (ArrayList<Registro>) entityManager.createQuery("from Registro where id_laboratorio = " + idLaboratorio).getResultList();
+	}
+
+	public Registro adicionar(EntityManagerFactory entityManagerFactory, EntityManager entityManager, Long idPessoa,
+			Laboratorio laboratorio, String acao, String hora) {
+
+		entityManager.getTransaction().begin();
+		Registro novoRegistro = new Registro(idPessoa, laboratorio, acao, hora);
+		entityManager.persist(novoRegistro);
+		entityManager.getTransaction().commit();
+		System.out.println("Registro adicionado com sucesso");
+		return novoRegistro;
+
+	}
+
 }

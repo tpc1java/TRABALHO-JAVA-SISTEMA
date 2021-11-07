@@ -13,6 +13,7 @@ import modelo.Turno;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class LaboratorioRepositorio {
@@ -67,8 +68,9 @@ public class LaboratorioRepositorio {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 		LocalDateTime now = LocalDateTime.now();
 		System.out.println(dtf.format(now));
-		registroRepositorio.adicionar(aluno.getId(), laboratorio, "entrar", dtf.format(now));
 		this.entityManager.getTransaction().commit();
+		registroRepositorio.adicionar(entityManagerFactory,entityManager,aluno.getId(), laboratorio, "entrar", dtf.format(now));
+		
 	}
 
 	public void desautenticarAluno(Long idLaboratorio, Aluno aluno) {
@@ -76,18 +78,26 @@ public class LaboratorioRepositorio {
 
 		this.entityManager.getTransaction().begin();
 		List<Aluno> alunos = laboratorio.getAlunos();
-		alunos.remove(alunos.indexOf(aluno));
+		
+		for (int i = 0; i < alunos.size(); i++) {
+			if(alunos.get(i).getId() == aluno.getId()) {
+				alunos.remove(i);
+			}
+		}
+		
 		laboratorio.setAlunos(alunos);
 		this.entityManager.getTransaction().commit();
 		System.out.println("Aluno desautenticado  com sucesso no lab: " + idLaboratorio);
-		
+
 		this.entityManager.getTransaction().begin();
 		RegistroRepositorio registroRepositorio = new RegistroRepositorio();
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 		LocalDateTime now = LocalDateTime.now();
 		System.out.println(dtf.format(now));
-		registroRepositorio.adicionar(aluno.getId(), laboratorio, "sair", dtf.format(now));
 		this.entityManager.getTransaction().commit();
+		
+		registroRepositorio.adicionar(entityManagerFactory,entityManager,aluno.getId(), laboratorio, "sair", dtf.format(now));
+	
 	}
 
 	public void autenticarProfessor(Long idLaboratorio, Professor professor) {
@@ -99,33 +109,38 @@ public class LaboratorioRepositorio {
 		laboratorio.setProfessores(professores);
 		this.entityManager.getTransaction().commit();
 		System.out.println("Professor autenticado com sucesso no lab: " + idLaboratorio);
-		
+
 		this.entityManager.getTransaction().begin();
-		RegistroRepositorio registroRepositorio = new RegistroRepositorio();
+		
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 		LocalDateTime now = LocalDateTime.now();
-		System.out.println(dtf.format(now));
-		registroRepositorio.adicionar(professor.getId(), laboratorio, "entrar", dtf.format(now));
 		this.entityManager.getTransaction().commit();
+		
+		RegistroRepositorio registroRepositorio = new RegistroRepositorio();
+		registroRepositorio.adicionar(entityManagerFactory,entityManager,professor.getId(), laboratorio, "entrar", dtf.format(now));
 	}
 
 	public void desautenticarProfessor(Long idLaboratorio, Professor professor) {
 		Laboratorio laboratorio = this.entityManager.find(Laboratorio.class, idLaboratorio);
 
 		this.entityManager.getTransaction().begin();
-		List<Aluno> professores = laboratorio.getAlunos();
-		professores.remove(professores.indexOf(professor));
-		laboratorio.setAlunos(professores);
+		List<Professor> professores = laboratorio.getProfessores();
+		
+		for (int i = 0; i < professores.size(); i++) {
+			if(professores.get(i).getId() == professor.getId()) {
+				professores.remove(i);
+			}
+		}
+		laboratorio.setProfessores(professores);
 		this.entityManager.getTransaction().commit();
 		System.out.println("Professor desautenticado  com sucesso no lab: " + idLaboratorio);
-		
-		this.entityManager.getTransaction().begin();
-		RegistroRepositorio registroRepositorio = new RegistroRepositorio();
+
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 		LocalDateTime now = LocalDateTime.now();
-		System.out.println(dtf.format(now));
-		registroRepositorio.adicionar(professor.getId(), laboratorio, "sair", dtf.format(now));
-		this.entityManager.getTransaction().commit();
+	
+		RegistroRepositorio registroRepositorio = new RegistroRepositorio();
+		registroRepositorio.adicionar(entityManagerFactory,entityManager,professor.getId(), laboratorio, "sair", dtf.format(now));
+		
 	}
 
 }

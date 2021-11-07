@@ -1,25 +1,23 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
-             version="2.2">
-    <persistence-unit name="clientes">
-        <properties>
-            <property name="javax.persistence.jdbc.driver"
-                      value=""/> <!-- DB Driver -->
-            <property name="javax.persistence.jdbc.url"
-                      value=""/> <!-- BD Mane -->
-            <property name="javax.persistence.jdbc.user" value=""/> <!-- DB User -->
-            <property name="javax.persistence.jdbc.password" value=""/> <!-- DB Password -->
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+    http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+	version="2.1">
 
-            <property name="hibernate.hbm2ddl.auto" value="update"/> <!-- create / create-drop / update -->
+	<persistence-unit name="persistence-jpa" transaction-type="RESOURCE_LOCAL">
+	<properties>
+		<property name="javax.persistence.jdbc.url"
+			value="jdbc:mysql://localhost/acesso_laboratorio?useSSL=false&amp;serverTimezone=UTC" />
 
-            <property name="hibernate.dialect"
-                      value=""/> <!-- DB Dialect
-                      No postgres é org.hibernate.dialect.PostgreSQL10Dialect-->
+		<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+		<property name="javax.persistence.jdbc.user" value="root" />
+		<property name="javax.persistence.jdbc.password" value="" />
 
-            <property name="hibernate.show_sql" value="false"/> <!-- Show SQL in console -->
-            <property name="hibernate.format_sql" value="false"/> <!-- Show SQL formatted -->
-        </properties>
-    </persistence-unit>
+		<property name="hibernate.hbm2ddl.auto" value="update" />
+
+		<!-- https://docs.jboss.org/hibernate/orm/5.4/javadocs/org/hibernate/dialect/package-summary.html -->
+		<property name="hibernate.dialect" 	value="org.hibernate.dialect.MySQL8Dialect" />
+	</properties>
+	</persistence-unit>
 </persistence>

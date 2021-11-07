@@ -13,24 +13,27 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
-@Entity 
+import com.google.gson.annotations.Expose;
+
+@Entity
 public class Laboratorio {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Expose
 	private long id;
 	private String codigo;
 	private int totalAssentos;
 
 	@ManyToMany()
 	private List<Aluno> alunos = new ArrayList<Aluno>();
-    
+
 	@ManyToMany()
-	private List <Professor> professores= new ArrayList<Professor>();
-	
-    public Laboratorio() {
-		
+	private List<Professor> professores = new ArrayList<Professor>();
+
+	public Laboratorio() {
+
 	}
-    
+
 	public Laboratorio(String codigo, int totalAssentos) {
 		super();
 		this.codigo = codigo;
@@ -76,9 +79,5 @@ public class Laboratorio {
 	public void setProfessores(List<Professor> professores) {
 		this.professores = professores;
 	}
-	
-	
-	
 
-	
 }
